@@ -238,21 +238,26 @@ document.addEventListener("securitypolicyviolation",function(e){
       if(g.nome) s.appendChild(el("h3","sub",g.nome));
       var gr=el("div","grade");
       g.itens.forEach(function(it){
-        var titulo=it[0], id=it[1], fmt=it[2]||"h";
+        var titulo=it[0], id=it[1], est={fmt:it[2]||"h"};
         var bt=el("button","frame"); bt.type="button";
         var tm=el("span","tela-mini");
-        if(fmt==="a"){ tm.appendChild(el("span","vazio","áudio")); }
+        if(est.fmt==="a"){ tm.appendChild(el("span","vazio","áudio")); }
         else{
           var img=document.createElement("img");
           img.src="https://lh3.googleusercontent.com/d/"+id+"=w500";
           img.alt=""; img.loading="lazy"; img.referrerPolicy="no-referrer";
+          /* o proprio frame diz se o video e vertical ou horizontal */
+          img.addEventListener("load",function(){
+            var w=img.naturalWidth, a=img.naturalHeight;
+            if(w&&a){ est.fmt = (a > w*1.1) ? "v" : "h"; }
+          });
           img.addEventListener("error",function(){ img.remove(); tm.insertBefore(el("span","vazio","vídeo"), tm.firstChild); });
           tm.appendChild(img);
         }
         tm.appendChild(el("span","pl"));
         bt.appendChild(tm);
         bt.appendChild(el("span","nome",titulo));
-        bt.addEventListener("click",function(){ abrir(titulo + (g.nome?" · "+g.nome:""), id, fmt); });
+        bt.addEventListener("click",function(){ abrir(titulo + (g.nome?" · "+g.nome:""), id, est.fmt); });
         gr.appendChild(bt);
       });
       s.appendChild(gr);
