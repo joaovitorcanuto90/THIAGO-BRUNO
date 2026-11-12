@@ -43,7 +43,7 @@ h3.sub{font-weight:400;font-size:11.5px;letter-spacing:.14em;text-transform:uppe
 @media (max-width:620px){.grade{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px 10px}}
 
 .frame{display:block;width:100%;text-align:left;background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer}
-.tela-mini{position:relative;aspect-ratio:16/9;background:var(--tile);overflow:hidden;border-radius:2px}
+.tela-mini{display:block;position:relative;aspect-ratio:16/9;background:var(--tile);overflow:hidden;border-radius:2px}
 .tela-mini img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.82;transition:opacity .35s ease,transform .6s ease}
 .frame:hover .tela-mini img,.frame:focus-visible .tela-mini img{opacity:1;transform:scale(1.04)}
 .tela-mini .vazio{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--fraco);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
