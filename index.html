@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thiago Bruno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Grade densa de frames sobre fundo escuro: a imagem carrega a pagina, o texto sai da frente. */
+:root{
+  color-scheme: dark;
+  --fundo:#0b0b0c;
+  --tile:#17171a;
+  --texto:#f2f1ef;
+  --fraco:#86848c;
+  --linha:rgba(242,241,239,.1);
+  --f:"Archivo","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--fundo);color:var(--texto);font-family:var(--f);font-weight:400;font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:1.5px solid var(--texto);outline-offset:3px}
+.wrap{max-width:1500px;margin:0 auto;padding:0 28px}
+
+header.topo{padding:52px 0 26px}
+h1{font-weight:500;font-size:clamp(22px,2.6vw,30px);letter-spacing:.01em;margin:0}
+header.topo p{margin:7px 0 0;color:var(--fraco);font-size:14px;max-width:48ch}
+
+nav.ix{position:sticky;top:0;z-index:6;background:var(--fundo);border-top:1px solid var(--linha);border-bottom:1px solid var(--linha);padding:13px 0}
+nav.ix .wrap{display:flex;gap:22px;flex-wrap:wrap;padding:0 28px}
+nav.ix a{font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--fraco);text-decoration:none;transition:color .15s}
+nav.ix a:hover{color:var(--texto)}
+
+section.tema{padding:46px 0 0;scroll-margin-top:54px}
+section.tema > h2{font-weight:500;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--texto);margin:0 0 2px}
+section.tema > p.nota{margin:0 0 18px;color:var(--fraco);font-size:13.5px}
+h3.sub{font-weight:400;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--fraco);margin:26px 0 12px}
+
+.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(172px,1fr));gap:18px 14px}
+@media (max-width:620px){.grade{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px 10px}}
+
+.frame{display:block;width:100%;text-align:left;background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer}
+.tela-mini{position:relative;aspect-ratio:16/9;background:var(--tile);overflow:hidden;border-radius:2px}
+.tela-mini img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.82;transition:opacity .35s ease,transform .6s ease}
+.frame:hover .tela-mini img,.frame:focus-visible .tela-mini img{opacity:1;transform:scale(1.04)}
+.tela-mini .vazio{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--fraco);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.tela-mini .pl{position:absolute;left:50%;top:50%;width:34px;height:34px;margin:-17px 0 0 -17px;border:1px solid rgba(255,255,255,.8);border-radius:50%;background:rgba(0,0,0,.3);opacity:0;transition:opacity .25s}
+.frame:hover .pl,.frame:focus-visible .pl{opacity:1}
+.tela-mini .pl::after{content:"";position:absolute;left:13px;top:10px;border-left:10px solid #fff;border-top:6px solid transparent;border-bottom:6px solid transparent}
+.frame .nome{display:block;margin-top:8px;font-size:12.5px;color:var(--fraco);line-height:1.3;transition:color .15s;overflow-wrap:anywhere}
+.frame:hover .nome,.frame:focus-visible .nome{color:var(--texto)}
+
+footer.pe{margin-top:64px;padding:24px 0 64px;border-top:1px solid var(--linha);color:var(--fraco);font-size:12.5px;letter-spacing:.04em}
+footer.pe a{color:var(--texto)}
+
+.luz{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(4,4,5,.94)}
+.luz.on{display:flex}
+.cx{width:100%;display:flex;flex-direction:column;gap:12px}
+.cx.h{max-width:min(1180px,calc((100vh - 140px)*16/9))}
+.cx.v{max-width:min(400px,calc((100vh - 140px)*9/16))}
+.cx.a{max-width:620px}
+.cx header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cx header b{font-weight:500;font-size:14px;letter-spacing:.06em}
+.cx header button{background:none;border:1px solid rgba(242,241,239,.4);color:var(--texto);font:inherit;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:7px 13px;border-radius:2px;cursor:pointer}
+.cx header button:hover{background:var(--texto);color:var(--fundo)}
+.tela{position:relative;background:#000;border-radius:2px;overflow:hidden}
+.cx.h .tela{aspect-ratio:16/9}
+.cx.v .tela{aspect-ratio:9/16}
+.cx.a .tela{height:70px}
+.tela iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.cx.a .tela iframe{position:static;height:70px}
+.tela p{position:absolute;inset:0;margin:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:22px;color:var(--fraco);font-size:13px}
+.cx .fora{margin:0;text-align:center;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tela-mini img{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="topo">
+    <h1>Thiago Bruno</h1>
+    <p>Todo o material produzido, por tema. Toque para assistir.</p>
+  </header>
+</div>
+
+<nav class="ix"><div class="wrap" id="ix"></div></nav>
+<main class="wrap" id="main"></main>
+<div class="wrap"><footer class="pe" id="pe"></footer></div>
+
+<div class="luz" id="luz" role="dialog" aria-modal="true" aria-labelledby="luzt">
+  <div class="cx h" id="cx">
+    <header><b id="luzt"></b><button type="button" id="fechar">Fechar</button></header>
+    <div class="tela" id="tela"></div>
+    <p class="fora"><a id="luzl" target="_blank" rel="noopener">Abrir no Drive &#8599;</a></p>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   CONTEUDO — item: [titulo, idNoDrive, formato]
+   formato: "h" horizontal (padrao) | "v" vertical | "a" audio
+   ============================================================ */
+var PASTA_RAIZ = "1e-OrHffBPF7wANeUdpAZ1qqcJ4uDXHP1";
+
+var TEMAS = [
+ { id:"estrelas", nome:"Estrelas", nota:"Bastidores de ensaios, campanhas e eventos", itens:[
+   ["Demoreel BTS","1N_auDE1PM3-nIb2xlDDRO9e54RvrsuZu"],
+   ["Dolce & Gabbana","1OO11mfKOI-uMCpZ7afaFeksqhoOaD9mn"],
+   ["Isis Valverde","1u0tBp3icSrGr92xElP2m5_5ctWX5suXS"],
+   ["Track & Field","1t_wjOG__R4DRBB2ZYqb1dpTLK2rw_sno"],
+   ["Kezia","1T3NEt1hqdKxBcynocFKTId9_1MErQ9zW"],
+   ["Neutrox","17Zw5il6cwPpK9Tq7asvquPw4e6UBkX54"],
+   ["Jade","1WcyM6H_UW8HuilLag6ko9SOmQDn35YSh"],
+   ["Juliette","1qxHtSYAsI1creBz4ih0fr1GrfAyhOB_k"],
+   ["Juliette II","15YGui4aA5AWj0Zupqq3dZuz19EQdm4GQ"],
+   ["Gio Ewbank","1T-ChrekTDjnk2LoiZH-KlQpzlXckbg-T"],
+   ["Glow Duo","1QYbx5LPgN26tnZx2GLkvI8v-8nkghzjz"],
+   ["Cris Vianna & Revista ELA","1KfdU2znn8Nh-gyK_TVfp-O9E5_bvsrL6"],
+   ["Zulu","1aho_FITut3uh-bcrMKz71Xk2EPcATSXk"],
+   ["Kolene Kids","1NgnOxLqwRWp3e84YPHjqdBEPv8gDyznr"],
+   ["Shooting MM & OX","1mxt6c6sCvoGe_bZYz9LTGtDAICq5lyQj"],
+   ["OX TB Studio","1OUgdxP1I4ZilVm-LqwBmN3XCf_4YaksO"],
+   ["Baile da Vogue","1_yro5oFNucrffKZeIoruclV_24UzlNyb"],
+   ["Adibe Marques","1jH9eDaUuFS6M3v311VJGd3h_Py8jhY8k"],
+   ["África","1QgmjacatgGP0iPAVoxys-_uGgW5PeiwR"]
+ ]},
+ { id:"lumix", nome:"TB Lumix", nota:"Série gravada na Lumix", itens:[
+   ["Kezia","1Hcz1po0kZoUVAKLV-lWfMi6IoLfzGJW8"],
+   ["Isis","1aDfrFZpSw5vJJ3HqxCYYPXn_GgdATbIp"],
+   ["Coreia","1dkPy76v3vhBQZurGUhI_LF6w0DUoHq80"],
+   ["Wimbledon","1NAUaHiKvk8ENku8hbvpqxJVDNKF_3PVd"],
+   ["Paris","1LmoC0tSiyCOQPgiUeVGMxGzxwhMS40zU"]
+ ]},
+ { id:"curso", nome:"Conteúdos do curso", nota:"Episódios, cortes e criativos", grupos:[
+   { nome:"Vídeos completos", itens:[
+     ["Tem que botar a cara","1NbTc_dU0qMQN0vmlLvZBHUJaKBOCW96c"],
+     ["Corte 3 — Ivan","1e7mmxgiuaHM47r7jCbQSCHdqVNGF6x_Q"],
+     ["Lidar com rejeição","1GQhjaUdMnhUf7FR3r7Gxg_TG1FnNSx4O"],
+     ["Ivan — corte 4","1UHT_0Xx7560HYJijeTn_5ofnDQDmMcfd"],
+     ["Paris — vídeo 1","1MY2rMCe2FPUqzMzU_W2JpFmpx76gT5io"]
+   ]},
+   { nome:"Episódios", itens:[
+     ["M1 — A1","1wCxbfHM8D9mY92J-wprvBdF7Aa3l4bwI"],
+     ["M0","1GcNg7vftjB7YmEwH0Bwt4bCIUGh3Rpol"],
+     ["M2 — A3","1UULuI2Cq8svDVFCHbM8nMyBCoYa9luQT"]
+   ]},
+   { nome:"Cortes", itens:[
+     ["Sem tempo pra vaidade","1-LMpdKyVcBaF1DqB-t3cul2J1_crkPof","v"],
+     ["Low profile","1_Ko1EldMgMS8IaeqWGel2ws_6IaLcUlm","v"],
+     ["Grave já","1G7JeUipreOn6ZGOrQ9wAIc2_3yYNufnf","v"]
+   ]}
+ ]},
+ { id:"criativos", nome:"Criativos", nota:"Cortes curtos para divulgação", itens:[
+   ["Cortes 8","1ivWEFlTAYREZsX1tQARdQ6S45XzA4mdt","v"],
+   ["Curso — corte 6","1z-Hi_H_8Ekg2KSvT0fZqmh9X-EfeWioR","v"],
+   ["Criativo aluno","1If01V3OJh6ysIcl4BfCu8iS5FdePitUO","v"],
+   ["Curso — corte 4","1kZz067wwG_FuvQ5iR2ahZ6tuXnIAny5U","v"],
+   ["Curso — corte 6 anterior","1HG1kbrjmXKtlRqUZIFcbB5pwhXSGXga5","v"],
+   ["Curso — corte 7","1hLPEnI7bPbT3x_zqCE-xiH_Y463UpgWY","v"],
+   ["Curso — corte 5","1p8lXciGWbtrS7Ld_-tD-1k-LmfGSQ_34","v"]
+ ]},
+ { id:"carrossel", nome:"Carrossel", nota:"Posts com foto e vídeo", grupos:[
+   { nome:"Flávio Augusto", itens:[
+     ["1","1AJdYHv3PkrtVHKNqkvWu2jl7i_opcXI0","v"],["2","1CURDRvgygfRHlcMyMpPiplK2s4Wqt0rV","v"],
+     ["2 — variação","1cilx3TG67aRzbpK76hgQPILP95rlmX_L","v"],["3","13r6CrZeJLblhAKyTX9heCxxAAuOHpH5i","v"],
+     ["4","1PUOB7D6zkJL9DM-WA20zSkE2mrYzFWSY","v"],["5","1GRVyM8XbUzJSLDvRszDc7KEaAfCYmCYm","v"],
+     ["7","1mw6yOaR9-qxXOkm2z0D4JumRFIeh2Z4v","v"],["8","1HoHhpKkzg8K6INFpJ6B1o-4HZEokm0MY","v"],
+     ["9","1U8phFatWLKSHSsx12ZrSmSOWTnVu2dyd","v"]
+   ]},
+   { nome:"Malbec", itens:[
+     ["1","1GoQvXGBf5QP2oKTGj7iPvpimn9slggET","v"],["2","1vZzTB6joMd_37N_WHM1EBmzNIHwB2JTn","v"],
+     ["3","1qfP4lAGorhrkZuDEqi1f1g9GGNxev693","v"],["4","16YZ24BrVYXX5JJYe-_ZojJRwYSEb3ecR","v"],
+     ["5","1vkbzt2th_KEF93sG2bydERFZX6jolDwA","v"],["6","1bgaCzQPXiBV4Lxjyh0Gpbvd-nMYnh4-o","v"],
+     ["7","1fU-Hqr6s3LCKHSL-_-lm1FpwQcQjheRS","v"]
+   ]},
+   { nome:"Lumix S9 — Isis", itens:[
+     ["Vídeo","1boT2PWWvdq9YMEdcBRlZOt8_gNZY4hn9","v"],["1","1NKm8JnTWvecExowb7IUHvEsgKxKn3RUz","v"],
+     ["2","1azwVoVy69UdXm0d5lynpP-CJ-jECghkU","v"],["3","1-ScZcRpDiqvdiG8_pDWDzmF1_Eb0I1x5","v"],
+     ["4","1yZRT_HJHYKz_TA5WsmL9cV5nicELR87-","v"],["5","1bpt6Sf0kE0BoRK5c_1cON8BYpC6zBFWf","v"]
+   ]}
+ ]},
+ { id:"youtube", nome:"YouTube", nota:"Episódios completos", itens:[
+   ["Ep. Ivan Aguilar","1ujSuTj7B6CloQm7gJ2QdHy7h-TO-QAQw"],
+   ["Lidar com rejeição","1G51iIkpgn-VIL68WtYbhe6xOLUnrLrku"]
+ ]},
+ { id:"podcast", nome:"Podcast", nota:"Áudio dos episódios", itens:[
+   ["Ivan Aguilar","111Yh8A7Ax2bmhSseHOoXyM4eZKiX4IIl","a"],
+   ["Lidar com rejeição","1k1laiiMxUYImwZJDw0gQgDWiIQ2QTMlq","a"]
+ ]},
+ { id:"paris", nome:"Paris", nota:"", itens:[
+   ["Tem que botar a cara","1zw88fc97YgmAE0pYaoWugL62j6SgESV5"]
+ ]},
+ { id:"lifestyle", nome:"Lifestyle", nota:"", itens:[
+   ["Porto","1QUih-yEj0_SuBU7OxAaZtY1ofGE3nOIT","v"],
+   ["Forbes","1KAXpeRVSvjP8PRI4869Ks2keJBe84-W4","v"]
+ ]}
+];
+/* ============================================================ */
+
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
+function grupos(t){ return t.grupos || [{nome:null,itens:t.itens||[]}]; }
+
+var bloqueado=false, luz=document.getElementById("luz"), tela=document.getElementById("tela"), cx=document.getElementById("cx"), foco=null;
+
+function abrir(titulo,id,fmt){
+  foco=document.activeElement;
+  cx.className="cx "+(fmt==="a"?"a":fmt==="v"?"v":"h");
+  document.getElementById("luzt").textContent=titulo;
+  document.getElementById("luzl").href="https://drive.google.com/file/d/"+id+"/view";
+  tela.textContent="";
+  if(bloqueado){ aviso(); }
+  else{
+    var f=el("iframe"); f.src="https://drive.google.com/file/d/"+id+"/preview";
+    f.allow="autoplay; fullscreen"; f.allowFullscreen=true; f.title=titulo; tela.appendChild(f);
+  }
+  luz.classList.add("on"); document.getElementById("fechar").focus();
+}
+function aviso(){ tela.textContent=""; tela.appendChild(el("p",null,"O player não carrega aqui. Use o link abaixo para abrir no Drive.")); }
+function fechar(){ luz.classList.remove("on"); tela.textContent=""; if(foco) foco.focus(); }
+document.getElementById("fechar").addEventListener("click",fechar);
+luz.addEventListener("click",function(e){ if(e.target===luz) fechar(); });
+document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&luz.classList.contains("on")) fechar(); });
+document.addEventListener("securitypolicyviolation",function(e){
+  if(/frame/.test(e.violatedDirective||"")){ bloqueado=true; if(luz.classList.contains("on")) aviso(); }
+});
+
+(function(){
+  var ix=document.getElementById("ix"), main=document.getElementById("main");
+  TEMAS.forEach(function(t){
+    var a=el("a",null,t.nome); a.href="#"+t.id; ix.appendChild(a);
+    var s=el("section","tema"); s.id=t.id;
+    s.appendChild(el("h2",null,t.nome));
+    if(t.nota) s.appendChild(el("p","nota",t.nota));
+    grupos(t).forEach(function(g){
+      if(g.nome) s.appendChild(el("h3","sub",g.nome));
+      var gr=el("div","grade");
+      g.itens.forEach(function(it){
+        var titulo=it[0], id=it[1], fmt=it[2]||"h";
+        var bt=el("button","frame"); bt.type="button";
+        var tm=el("span","tela-mini");
+        if(fmt==="a"){ tm.appendChild(el("span","vazio","áudio")); }
+        else{
+          var img=document.createElement("img");
+          img.src="https://lh3.googleusercontent.com/d/"+id+"=w500";
+          img.alt=""; img.loading="lazy"; img.referrerPolicy="no-referrer";
+          img.addEventListener("error",function(){ img.remove(); tm.insertBefore(el("span","vazio","vídeo"), tm.firstChild); });
+          tm.appendChild(img);
+        }
+        tm.appendChild(el("span","pl"));
+        bt.appendChild(tm);
+        bt.appendChild(el("span","nome",titulo));
+        bt.addEventListener("click",function(){ abrir(titulo + (g.nome?" · "+g.nome:""), id, fmt); });
+        gr.appendChild(bt);
+      });
+      s.appendChild(gr);
+    });
+    main.appendChild(s);
+  });
+  var pe=document.getElementById("pe");
+  pe.appendChild(document.createTextNode("Todo o material fica no Google Drive. "));
+  var pl=el("a",null,"Abrir a pasta completa ↗");
+  pl.href="https://drive.google.com/drive/folders/"+PASTA_RAIZ; pl.target="_blank"; pl.rel="noopener";
+  pe.appendChild(pl);
+})();
+</script>
+</body>
+</html>
